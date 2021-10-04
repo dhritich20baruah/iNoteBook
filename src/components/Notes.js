@@ -44,11 +44,11 @@ const Notes = () => {
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="etitle" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="etitle" value={note.etitle} name="etitle" aria-describedby="emailHelp" onChange={onChange} />
+                                    <input type="text" className="form-control" id="etitle" value={note.etitle} name="etitle" aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edescription" className="form-label">Description</label>
-                                    <input type="text" className="form-control" id="edescription" value={note.edescription} name="edescription" onChange={onChange} />
+                                    <input type="text" className="form-control" id="edescription" value={note.edescription} name="edescription" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="etag" className="form-label">Tag</label>
@@ -59,15 +59,16 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
+                            <button onClick={handleClick} disabled={note.etitle.length<5 || note.edescription.length<5} type="button" className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="row my-3">
                 <h2>Your notes</h2>
+                {notes.length===0 && 'No notes to display'}
                 {notes.map((note) => {
-                    return <Noteitem key={note._id} updateNote={updateNote} note={note} />//passing a prop
+                    return <Noteitem key={note._id} updateNote={updateNote} note={note} />//passing a prop. minLength={5} required
                 })}
             </div>
         </>
